@@ -17,7 +17,7 @@ class LoginView extends React.Component
                     <SiteTitle>Login Form</SiteTitle>
 
                     <div className="row">
-                        <div className="col col-md-6">
+                        <div className="col col-lg-6">
                             <form className="mt-4" onSubmit={this.formHandler}>
                                 <Input 
                                     id={'email'}
