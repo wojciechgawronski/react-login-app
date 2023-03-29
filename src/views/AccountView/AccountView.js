@@ -3,7 +3,7 @@ import React from "react";
 const AccountView = () => {
     return <>
         <main>
-            <div>
+            <div className="container">
                 AccountView
             </div>
         </main>

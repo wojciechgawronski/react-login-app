@@ -3,7 +3,7 @@ import React from "react";
 const LoginView = () => {
     return <>
         <main>
-            <div>
+            <div className="container">
                 LoginView
             </div>
         </main>
