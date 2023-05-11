@@ -2,58 +2,97 @@ import React from "react";
 import SiteTitle from "../../components/SiteTitle/SiteTitle";
 import Input from "../../components/form/Input/Input";
 import Button from "../../components/form/Button/Button";
+import { Form, redirect, useActionData } from "react-router-dom";
 
-class RegisterView extends React.Component
-{
-    render() {
-        return <>
-            <main>
-                <div className="container">
-                    
-                    <SiteTitle>Register View</SiteTitle>
+const RegisterView = () => {
 
-                    <div className="row">
-                            <div className="col col-md-6">
-                                <form className="mt-4" onSubmit={this.formHandler}>
-                                <Input 
-                                    id={'name'}
-                                    name={'name'}
-                                    type={'text'}
-                                    labelText={'Name'} 
-                                    required
-                                />
-                                    <Input 
-                                        id={'email'}
-                                        name={'email'}
-                                        type={'email'}
-                                        labelText={'Email address'} 
-                                        required
-                                        helpText={'We\'ll never share your email with anyone else.'}
-                                    />
+    const data = useActionData();
 
-                                    <Input 
-                                        id={'password'}
-                                        name={'password'}
-                                        type={'password'}
-                                        labelText={'Password'} 
-                                    />  
+    return <>
+        <main>
+            <div className="container">
+                
+                <SiteTitle>Register View</SiteTitle>
 
-                                    <Input 
-                                        id={'password'}
-                                        name={'password'}
-                                        type={'password'}
-                                        labelText={'Repeat password'} 
-                                    />   
+                <div className="row">
+                    <div className="col col-md-6">
 
-                                    <Button>Submit</Button>
-                                </form>
-                            </div>
-                        </div>
+                        {data && data.errors && <ul>
+                            {data.errors.name && <li>{data.errors.name[0]}</li>}
+                            {data.errors.email && <li>{data.errors.email[0]}</li>}
+                            {data.errors.password && <li>{data.errors.password[0]}</li>}
+                        </ul>}
+
+                        <Form method="post">
+                            <Input 
+                                id={'name'}
+                                name={'name'}
+                                type={'text'}
+                                labelText={'Name'} 
+                                required
+                            />
+                            <Input 
+                                id={'email'}
+                                name={'email'}
+                                type={'text'}
+                                labelText={'Email address'} 
+                                required
+                                helpText={'We\'ll never share your email with anyone else.'}
+                            />
+
+                            <Input 
+                                id={'password'}
+                                name={'password'}
+                                type={'password'}
+                                labelText={'Password'} 
+                            />  
+
+                            <Input 
+                                id={'password_confirmation'}
+                                name={'password_confirmation'}
+                                type={'password'}
+                                labelText={'Repeat password'} 
+                            />   
+
+                            <Button>Submit</Button>
+                        </Form>
+                    </div>
                 </div>
-            </main>
-        </>
-    }
-
+            </div>
+        </main>
+    </>
 }
 
 export default RegisterView;
+
+export async function action({ request }) {
+
+    const data = await request.formData();
+
+    const registerData = {
+        email: data.get('email'),
+        name: data.get('name'),
+        password: data.get('password'),
+        password_confirmation: data.get('password_confirmation'),
+    }
+
+    const response = await fetch('http://127.0.0.1:8000/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(registerData)
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.errors) {
+        const data = {};
+        data.errors = responseData.errors
+        return data;
+    }
+
+    if (responseData.message === 'register_ok') {
+        return redirect('/login');
+    }
+}
