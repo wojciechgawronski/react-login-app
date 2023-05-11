@@ -1,24 +1,43 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
 import AccountView from './views/AccountView/AccountView';
 import LoginView from './views/LoginView/LoginView';
 import RegisterView from './views/RegisterView/RegisterView';
 import StartView from './views/StartView/StartView';
+import RootLayout from './views/RootLayout';
+import ErrorPage from './views/ErrorPage';
+
+const router = createBrowserRouter([
+    {
+        path: '/', 
+        element: <RootLayout/>,
+        errorElement: <ErrorPage/>,
+        id: 'root',
+        children: [
+            {
+                index: true,
+                element: <StartView/>,
+            },
+            {
+                path: 'login',
+                element: <LoginView/>,
+            },
+            {
+                path: 'register',
+                element: <RegisterView/>,
+            },
+            {
+                path: 'account',
+                element: <AccountView/>,
+            },
+
+        ]
+    }
+])
 
 function App() {
     return (
-        <BrowserRouter>
-            <Header/>
-            <Routes>
-                <Route path='/' Component={StartView}></Route>
-                <Route path='/login' Component={LoginView}></Route>
-                <Route path='/account' Component={AccountView}></Route>
-                <Route path='/register' Component={RegisterView}></Route>
-            </Routes>
-            <Footer/>
-        </BrowserRouter>
+        <RouterProvider router={router}/>
   );
 }
 
