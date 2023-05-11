@@ -6,7 +6,7 @@ const Input = ({id, name, type, labelText, helpText,}) => {
 
     return <>
         <div className="mb-3">
-            <label htmlFor={id} className="form-label">{labelText}</label>
+            <label htmlFor={id} className="form-label mb-0">{labelText}</label>
             <input 
                 id={id}
                 name={name} 
