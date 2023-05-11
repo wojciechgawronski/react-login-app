@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import AccountView from './views/AccountView/AccountView';
-import LoginView from './views/LoginView/LoginView';
+import LoginView, { action as loginAction } from './views/LoginView/LoginView';
 import RegisterView from './views/RegisterView/RegisterView';
 import StartView from './views/StartView/StartView';
 import RootLayout from './views/RootLayout';
@@ -21,6 +21,7 @@ const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <LoginView/>,
+                action: loginAction
             },
             {
                 path: 'register',

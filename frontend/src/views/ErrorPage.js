@@ -16,6 +16,18 @@ const ErrorPage = () => {
         data = error.data;
     }
 
+    // 405 Method Not Allowed
+    if (error.status === 405) {
+        title = error.status;
+        message = error.statusText;
+        data = error.data;
+    }
+
+    if (error.status === 500) {
+        title = error.status;
+        message = error.statusText;
+        data = error.data;
+    }
     
     return <>
         <Header/>
