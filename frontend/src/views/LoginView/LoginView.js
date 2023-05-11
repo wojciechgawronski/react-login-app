@@ -13,6 +13,8 @@ const LoginView = () => {
 
                 <SiteTitle>Login Form</SiteTitle>
 
+                {data && data.message && <p>{data.message}</p>}
+
                 <div className="row">
                     <div className="col col-lg-6">
                         <Form method='post'>
@@ -63,19 +65,27 @@ export async function action({ request }) {
     });
 
     if (response.status === 404) {
-        throw json({status: 404, statusText: 'Server error.'})
+        throw json({ status: 404, message: 'Server error.' })
     }
 
-    if (!response.ok) {
-        throw json({status: 500, statusText: 'Server error.'})
+    if (response.status === 401) {
+        return response;
     }
 
     if (response.status === 200) {
         const responseData = await response.json();
         
         // manage user and token
-        // ...
+        if (responseData.email && responseData.token) {
+            localStorage.setItem('userEmail', responseData.email);
+            localStorage.setItem('userToken', responseData.token);
+            alert('Authorized');
+        }
         
+    }
+
+    if (!response.ok) {
+        throw json({status: 500, statusText: '500 Server error.'})
     }
 
     return 1;
