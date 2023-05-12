@@ -1,6 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import AccountView from './views/AccountView/AccountView';
+import ArticlesListView, { listLoader as articlesListLoader} from './views/ArticlesViev/ArticlesListView';
+import ArticlesView, { articlesLoader } from './views/ArticlesViev/ArticlesView';
+import ShowArticle, { loader as articleLoader} from './views/ArticlesViev/ShowArticle';
 import LoginView, { action as loginAction } from './views/LoginView/LoginView';
 import RegisterView, { action as registerAction } from './views/RegisterView/RegisterView';
 import StartView from './views/StartView/StartView';
@@ -31,6 +34,27 @@ const router = createBrowserRouter([
             {
                 path: 'account',
                 element: <AccountView/>,
+            },
+            {
+                path: 'articles',
+                children: [
+                    {
+                        index: true,
+                        element: <ArticlesView/>,
+                        loader: articlesLoader,
+                    },
+                    { 
+                        path: ':id',
+                        id: 'articleId',
+                        element: <ShowArticle/>,
+                        loader: articleLoader
+                    }
+                ]
+            },
+            {
+                path: 'articles-list',
+                element: <ArticlesListView/>,
+                loader: articlesListLoader,
             },
 
         ]
