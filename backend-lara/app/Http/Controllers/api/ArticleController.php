@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
 use App\Models\Article;
-use App\Http\Resources\ArticlesResource;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resources\ArticlesResource;
 use App\Http\Resources\ArticleShowResource;
 use App\Http\Resources\ArticlesListResource;
-use Illuminate\Database\Eloquent\Casts\Json;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
 
 class ArticleController extends Controller
 {
