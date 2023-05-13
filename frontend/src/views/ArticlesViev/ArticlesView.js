@@ -10,11 +10,6 @@ const ArticlesView = () => {
 
     const data = useLoaderData();
     let articles = data.data;
-    console.log(articles)
-
-    useEffect(() =>{
-        console.log('use effect')
-    }, [])
 
     return <>
         <main>
@@ -34,7 +29,7 @@ const ArticlesView = () => {
                         )}
                     </div>
                 </div>
-                
+
             </div>
         </main>
     </>
@@ -46,10 +41,15 @@ export default ArticlesView;
 export async function articlesLoader({ request }) {
 
     const searchParams =  new URL(request.url).searchParams;
-    const page = searchParams.get('page');
-    // console.log(page)
+    let page = searchParams.get('page');
 
-    const url = process.env.REACT_APP_BACKEND_SERVER +'/articles';
+    if (page) {
+        page = '?page='+page;
+    } else {
+        page = ''
+    }
+
+    const url = process.env.REACT_APP_BACKEND_SERVER +'/articles'+page;
 
     const response = await fetch(url);
     const resData = await response.json();
