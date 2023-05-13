@@ -34,7 +34,7 @@ export default ShowArticle;
 
 
 export async function loader ({ params }) {
-    const url = `http://127.0.0.1:8000/api/v1/articles/${params.id}`;
+    const url = process.env.REACT_APP_BACKEND_SERVER+`/articles/${params.id}`;
     const response = await fetch(url);
     const resData = await response.json();
 

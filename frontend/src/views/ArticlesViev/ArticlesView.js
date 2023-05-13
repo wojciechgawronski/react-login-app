@@ -1,35 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SiteTitle from "../../components/SiteTitle/SiteTitle";
-import { NavLink, useLoaderData } from "react-router-dom";
-import { noDataAlert } from "../../util/view";
+import { useLoaderData } from "react-router-dom";
+import ArticlePaginationComponent from "./ArticlePaginationComponent";
+import ArticlesListComponent from "./ArticlesListComponent";
+import NoDataAlert from "../../components/NoDataAlert";
 
 
 const ArticlesView = () => {
 
-    let articles = useLoaderData();
-    let aRows = null;
+    const data = useLoaderData();
+    let articles = data.data;
+    console.log(articles)
 
-    if (articles.length !== 0) {
-        aRows =  articles.map((article, index )=> (
-                <tr key={index}>
-                    <td>{article.id}</td>
-                    <td>
-                    <NavLink className="" to={`/articles/${article.id}`}>{article.title}</NavLink>
-                        </td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>
-                        ...
-                        {/* <button className="btn btn-success btn-sm rounded-0 me-1">show</button> */}
-                        {/* <button className="btn btn-success btn-sm rounded-0 me-1">edit</button> */}
-                        {/* <button className="btn btn-danger btn-sm rounded-0 me-1">delete</button> */}
-                    </td>
-                </tr>
-            ))
-        
-    } else {
-        articles = null;
-    }
+    useEffect(() =>{
+        console.log('use effect')
+    }, [])
 
     return <>
         <main>
@@ -39,22 +24,17 @@ const ArticlesView = () => {
 
                 <div className="row">
                     <div className="col">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {articles ? (aRows) : (noDataAlert)}
-                            </tbody>
-                        </table>
+                        {articles.length !== 0 ? (
+                            <>
+                                <ArticlesListComponent articles={articles}/>
+                                <ArticlePaginationComponent data={data}/>
+                            </>
+                        ) : (
+                            <NoDataAlert/>
+                        )}
                     </div>
                 </div>
+                
             </div>
         </main>
     </>
@@ -63,9 +43,14 @@ const ArticlesView = () => {
 export default ArticlesView; 
 
 
-export async function articlesLoader() {
+export async function articlesLoader({ request }) {
 
-    const url = 'http://127.0.0.1:8000/api/v1/articles';
+    const searchParams =  new URL(request.url).searchParams;
+    const page = searchParams.get('page');
+    // console.log(page)
+
+    const url = process.env.REACT_APP_BACKEND_SERVER +'/articles';
+
     const response = await fetch(url);
     const resData = await response.json();
 
@@ -77,6 +62,6 @@ export async function articlesLoader() {
         };
     }
 
-    return resData.data;
+    return resData;
 
 }
