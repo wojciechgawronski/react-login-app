@@ -28,6 +28,11 @@ const ErrorPage = () => {
         message = error.statusText;
         data = error.data;
     }
+
+    // eg. when server is down
+    if (typeof(error.message) === 'string') {
+        data = error.message;
+    }
     
     return <>
         <Header/>

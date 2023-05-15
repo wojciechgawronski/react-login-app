@@ -16,6 +16,11 @@ use App\Http\Controllers\LoginController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::fallback(function(){
+    return response()->json(['message' => 'Page Not Found'], 404);
+});
+
 Route::prefix('v1')->group(function(){
     Route::get('articles/list', [ArticleController::class, 'list']);
     Route::get('articles', [ArticleController::class, 'index']);

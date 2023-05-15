@@ -51,17 +51,15 @@ export async function articlesLoader({ request }) {
 
     const url = process.env.REACT_APP_BACKEND_SERVER +'/articles'+page;
 
-    const response = await fetch(url);
-    const resData = await response.json();
-
-    if (!response.ok) {
+    try {
+        const response = await fetch(url);
+        const resData = await response.json();
+        return resData;
+    } catch (e) {
         throw new Response({}), {
             status: 500, 
-            statusText: 'Could not fetch any data.',
+            statusText: e.message,
             data: url
         };
     }
-
-    return resData;
-
 }
