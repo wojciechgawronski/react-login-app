@@ -25,7 +25,8 @@ const Nav = () => {
                                 <li>
                                     <NavLink className="dropdown-item" to='/articles-list'>Articles List</NavLink>
                                 </li>
-                                <li><NavLink className="dropdown-item" to='/articles'>Articles</NavLink></li>
+                                <li><NavLink className="dropdown-item" to='/articles' end>Articles</NavLink></li>
+                                <li><NavLink className="dropdown-item" to='/articles/new' end>New Article</NavLink></li>
                             </ul>
                         </li>
                     </ul>

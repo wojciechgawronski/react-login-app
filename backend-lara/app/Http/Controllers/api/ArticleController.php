@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Article;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticlesResource;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use App\Http\Resources\ArticlesResource;
 use App\Http\Resources\ArticleShowResource;
 use App\Http\Resources\ArticlesListResource;
 
@@ -26,19 +27,25 @@ class ArticleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+        $title = $request->title;
+        $content = $request->content;
+
+        Article::create([
+            'uuid' => Str::uuid(),
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'content' => $content,
+            'user_id' => 1
+        ]);
+
+        return response()->json([
+            'message' => 'Article created',
+        ], 201);
+
     }
 
     /**
