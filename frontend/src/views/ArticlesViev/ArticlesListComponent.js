@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const ArticlesListComponent = ({articles}) => {
+const ArticlesListComponent = ({articles, onDelete}) => {
     
     const dataTable =  articles.map((article, index )=> (
         <tr key={index}>
@@ -14,7 +14,7 @@ const ArticlesListComponent = ({articles}) => {
                 ...
                 {/* <button className="btn btn-success btn-sm rounded-0 me-1">show</button> */}
                 {/* <button className="btn btn-success btn-sm rounded-0 me-1">edit</button> */}
-                {/* <button className="btn btn-danger btn-sm rounded-0 me-1">delete</button> */}
+                <button onClick={() => (onDelete(article.id))} className="btn btn-danger btn-sm rounded-0 me-1">delete</button>
             </td>
         </tr>
     ))

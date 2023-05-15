@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function(){
     Route::get('articles/list', [ArticleController::class, 'list']);
     Route::get('articles', [ArticleController::class, 'index']);
     Route::get('articles/{article}', [ArticleController::class, 'show']);
+    Route::delete('articles/{article}', [ArticleController::class, 'destroy']);
 });
 
 Route::post('register', [AuthController::class, 'register']);

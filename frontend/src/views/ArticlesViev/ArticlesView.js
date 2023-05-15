@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import SiteTitle from "../../components/SiteTitle/SiteTitle";
 import { useLoaderData } from "react-router-dom";
 import ArticlePaginationComponent from "./ArticlePaginationComponent";
@@ -11,6 +11,24 @@ const ArticlesView = () => {
     const data = useLoaderData();
     let articles = data.data;
 
+    const deleteHandler = (id) => {
+        const proceed = window.confirm('Are you sure?')
+
+        if (proceed) {
+            const url = process.env.REACT_APP_BACKEND_SERVER +'/articles/'+id;
+
+            fetch (url, {
+                method: 'DELETE',
+            })
+            .then(()=> {
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
     return <>
         <main>
             <div className="container">
@@ -21,7 +39,7 @@ const ArticlesView = () => {
                     <div className="col">
                         {articles.length !== 0 ? (
                             <>
-                                <ArticlesListComponent articles={articles}/>
+                                <ArticlesListComponent articles={articles} onDelete={deleteHandler}/>
                                 <ArticlePaginationComponent data={data}/>
                             </>
                         ) : (
