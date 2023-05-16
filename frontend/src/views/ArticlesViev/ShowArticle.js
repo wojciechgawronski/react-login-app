@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, NavLink } from "react-router-dom";
 import SiteTitle from "../../components/SiteTitle/SiteTitle";
 
 const ShowArticle = () => {
@@ -23,6 +23,14 @@ const ShowArticle = () => {
                         <p className="lead">{article.content}</p>
                         <p className="small mb-0"><strong>Created at:</strong> {created_at}</p>
                         <p className="small mb-0"><strong>Updated at:</strong> {updated_at}</p>
+                        <div className="mt-3">
+                            <NavLink to={`/articles/${article.id}/edit`}>
+                                <button className="btn btn-success btn-sm rounded-0 me-1">edit</button>
+                            </NavLink>
+                            <NavLink to=".." >
+                                <button className="btn btn-success btn-sm rounded-0 me-1">Back</button>
+                            </NavLink>
+                        </div>
                     </div>
                 </div>
             </div>

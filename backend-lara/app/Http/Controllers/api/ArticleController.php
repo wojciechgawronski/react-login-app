@@ -61,7 +61,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return ArticleShowResource::make($article);
     }
 
     /**
@@ -69,7 +69,12 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $article->update($request->validated());
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Article updated'
+        ], 201);
     }
 
     /**

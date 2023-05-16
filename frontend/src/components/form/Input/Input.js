@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from 'prop-types';
 
-const Input = ({id, name, type, labelText, helpText,}) => {
+const Input = ({id, name, type, labelText, helpText, required, defaultValue}) => {
     const helpId = `help-${id}`;  
 
     return <>
@@ -13,7 +13,8 @@ const Input = ({id, name, type, labelText, helpText,}) => {
                 type={type} 
                 className="form-control" 
                 aria-describedby={helpId}
-                
+                required={required}
+                defaultValue={defaultValue ? defaultValue : ''}
             >
             </input>
             {

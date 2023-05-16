@@ -22,11 +22,14 @@ Route::fallback(function(){
 });
 
 Route::prefix('v1')->group(function(){
-    Route::post('articles', [ArticleController::class, 'store']);
-    Route::get('articles/list', [ArticleController::class, 'list']);
     Route::get('articles', [ArticleController::class, 'index']);
     Route::get('articles/{article}', [ArticleController::class, 'show']);
+    Route::get('articles/{article}/edit', [ArticleController::class, 'edit']);
+    Route::patch('articles/{article}', [ArticleController::class, 'update']);
     Route::delete('articles/{article}', [ArticleController::class, 'destroy']);
+    Route::post('articles', [ArticleController::class, 'store']);
+
+    Route::get('articles/list', [ArticleController::class, 'list']);
 });
 
 Route::post('register', [AuthController::class, 'register']);

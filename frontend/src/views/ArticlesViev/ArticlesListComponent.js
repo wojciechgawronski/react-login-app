@@ -11,9 +11,14 @@ const ArticlesListComponent = ({articles, onDelete}) => {
             <td>...</td>
             <td>...</td>
             <td>
-                ...
-                {/* <button className="btn btn-success btn-sm rounded-0 me-1">show</button> */}
-                {/* <button className="btn btn-success btn-sm rounded-0 me-1">edit</button> */}
+                <NavLink className="" to={`/articles/${article.id}`}>
+                    <button className="btn btn-success btn-sm rounded-0 me-1">show</button>
+                </NavLink>
+                
+                <NavLink className="" to={`/articles/${article.id}/edit`}>
+                    <button className="btn btn-success btn-sm rounded-0 me-1">edit</button>
+                </NavLink>
+
                 <button onClick={() => (onDelete(article.id))} className="btn btn-danger btn-sm rounded-0 me-1">delete</button>
             </td>
         </tr>

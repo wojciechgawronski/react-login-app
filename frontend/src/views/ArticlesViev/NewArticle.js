@@ -1,8 +1,6 @@
 import SiteTitle from "../../components/SiteTitle/SiteTitle";
-import { Form, redirect, useActionData } from 'react-router-dom';
-import Button from "../../components/form/Button/Button";
-import Input from "../../components/form/Input/Input";
-import Textarea from "../../components/form/Textarea/Textarea";
+import { redirect, useActionData } from 'react-router-dom';
+import ArticleForm from "./ArticleForm";
 
 const NewArticle = () => {
 
@@ -21,29 +19,11 @@ const NewArticle = () => {
 
                 <div className="row">
                     <div className="col">
-                        <p className="text-muted small">ID: | Created at: | Updated at: </p>
-                        <Form method='post'>
-                            <Input 
-                                id={'title'}
-                                name={'title'}
-                                type={'text'}
-                                labelText={'Title'}
-                                required
-                            />
-
-                            <Textarea
-                                id={'content'}
-                                name={'content'}
-                                labelText={'Content'}
-                            />
-
-                            <Button>Add</Button>
-                        </Form>
+                        <ArticleForm/>
                     </div>
                 </div>
             </div>
         </main>
-
     </>
 }
 

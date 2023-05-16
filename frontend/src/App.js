@@ -10,6 +10,7 @@ import StartView from './views/StartView/StartView';
 import RootLayout from './views/RootLayout';
 import ErrorPage from './views/ErrorPage';
 import NewArticle, { newArticleAction } from './views/ArticlesViev/NewArticle';
+import EditArticle, { loader as editArticleLoader, editArticleAction } from './views/ArticlesViev/EditArticle';
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,12 @@ const router = createBrowserRouter([
                         id: 'articleId',
                         element: <ShowArticle/>,
                         loader: articleLoader
+                    },
+                    {
+                        path: ':id/edit',
+                        element: <EditArticle/>,
+                        loader: editArticleLoader,
+                        action: editArticleAction,
                     },
                     {
                         path: 'new',

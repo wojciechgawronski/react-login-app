@@ -1,4 +1,4 @@
-const Textarea = ({id, name, labelText}) => {
+const Textarea = ({id, name, labelText, defaultValue}) => {
     return <>
         <div className="mb-3">
             <label 
@@ -9,7 +9,8 @@ const Textarea = ({id, name, labelText}) => {
                 name={name}
                 className="form-control"
                 id={id} 
-                rows="3">
+                rows="3"
+                defaultValue={defaultValue} >
             </textarea>
         </div>
     </>
