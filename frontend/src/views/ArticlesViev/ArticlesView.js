@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import ArticlePaginationComponent from "./ArticlePaginationComponent";
 import ArticlesListComponent from "./ArticlesListComponent";
 import NoDataAlert from "../../components/NoDataAlert";
+import PaginationClass from "../../components/PaginationClass";
 
 
 const ArticlesView = () => {
@@ -41,6 +42,7 @@ const ArticlesView = () => {
                             <>
                                 <ArticlesListComponent articles={articles} onDelete={deleteHandler}/>
                                 <ArticlePaginationComponent data={data}/>
+                                <PaginationClass/>
                             </>
                         ) : (
                             <NoDataAlert/>
