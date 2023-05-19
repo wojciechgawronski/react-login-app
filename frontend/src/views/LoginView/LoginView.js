@@ -63,7 +63,9 @@ export async function action({ request }) {
         password: data.get('password')
     }
 
-    const response = await fetch('http://127.0.0.1:8000/api/login', {
+    const url = `${process.env.REACT_APP_BACKEND_SERVER}/login`;
+
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
@@ -72,6 +74,11 @@ export async function action({ request }) {
     });
 
     const responseData = await response.json();
+
+    if (response.status === 401) {
+        console.log('401 Error');
+        return responseData.errors;
+    }
 
     if (responseData.errors) {
         const data = {};
@@ -89,13 +96,11 @@ export async function action({ request }) {
         throw json({ status: 404, message: 'Server error.' })
     }
 
-    if (response.status === 401) {
-        return response;
-    }
-
     if (response.status === 200 && responseData.token) {
-        // manage user and tokenx
-        localStorage.setItem('token', responseData.token);
+        const tokenName = process.env.REACT_APP_BACKEND_LOCALSTORAGE_ACCESS_TOKEN_NAME;
+        const uDataName = process.env.REACT_APP_BACKEND__LOCALSTORAGE_USER_DATA_NAME;
+        localStorage.setItem(`${tokenName}`, responseData.token);
+        localStorage.setItem(`${uDataName}`, JSON.stringify(responseData.user));
         return redirect('/account');
     }
 

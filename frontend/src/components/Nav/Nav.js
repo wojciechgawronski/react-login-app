@@ -1,7 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
 
 const Nav = () => {
+
+    const token = useRouteLoaderData('rootElement');
+
+    const buttonLogoutStyle = {
+        background: 'none',
+        border: 'none',
+    }
+
     return <>
         <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
@@ -12,9 +20,18 @@ const Nav = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item"><NavLink className="nav-link" to='/'>Start</NavLink></li>
-                        <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li>
-                        <li className="nav-item"><NavLink className="nav-link" to='/register'>Register</NavLink></li>
-                        <li className="nav-item"><NavLink className="nav-link" to='/account'>Account</NavLink></li>
+                        {token && (<>
+                            <li className="nav-item">
+                                <Form action='/logout' method='POST'>
+                                    <button style={buttonLogoutStyle} className="nav-link">Logout</button>
+                                </Form>
+                            </li>
+                            <li className="nav-item"><NavLink className="nav-link" to='/account'>Account</NavLink></li>
+                        </>)}
+                        {!token && (<>
+                            <li className="nav-item"><NavLink className="nav-link" to='/login'>Login</NavLink></li>
+                            <li className="nav-item"><NavLink className="nav-link" to='/register'>Register</NavLink></li>
+                        </>)}
                         <li className="nav-item"><NavLink className="nav-link" to='/articles-list'>Articles List</NavLink></li>
 
                         <li className="nav-item dropdown">

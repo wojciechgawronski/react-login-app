@@ -54,7 +54,7 @@ const RegisterView = () => {
                                 labelText={'Repeat password'} 
                             />   
 
-                            <Button>Submit</Button>
+                            <Button>Register</Button>
                         </Form>
                     </div>
                 </div>
@@ -76,7 +76,8 @@ export async function action({ request }) {
         password_confirmation: data.get('password_confirmation'),
     }
 
-    const response = await fetch('http://127.0.0.1:8000/api/register', {
+    const url = `${process.env.REACT_APP_BACKEND_SERVER}/register`;
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
@@ -95,4 +96,6 @@ export async function action({ request }) {
     if (responseData.message === 'register_ok') {
         return redirect('/login');
     }
+
+    return;
 }

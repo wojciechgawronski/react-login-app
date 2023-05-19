@@ -11,13 +11,15 @@ import RootLayout from './views/RootLayout';
 import ErrorPage from './views/ErrorPage';
 import NewArticle, { newArticleAction } from './views/ArticlesViev/NewArticle';
 import EditArticle, { loader as editArticleLoader, editArticleAction } from './views/ArticlesViev/EditArticle';
+import { tokenLoader, checkAuthLoader, logoutAction } from './util/auth';
 
 const router = createBrowserRouter([
     {
         path: '/', 
         element: <RootLayout/>,
         errorElement: <ErrorPage/>,
-        id: 'root',
+        id: 'rootElement',
+        loader: tokenLoader,
         children: [
             {
                 index: true,
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
                 action: loginAction
             },
             {
+                path: 'logout',
+                action: logoutAction,
+            },
+            {
                 path: 'register',
                 element: <RegisterView/>,
                 action: registerAction,
@@ -36,6 +42,7 @@ const router = createBrowserRouter([
             {
                 path: 'account',
                 element: <AccountView/>,
+                loader: checkAuthLoader,
             },
             {
                 path: 'articles',
