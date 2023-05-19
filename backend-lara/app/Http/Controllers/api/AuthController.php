@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AuthLoginRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\AuthRegisterPostRequest;
+use App\Http\Resources\UserShowResource;
 
 class AuthController extends Controller
 {
@@ -34,14 +35,26 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('cookie_token', $token, 60);
-            return response(['token' => $token], Response::HTTP_OK)->withoutCookie($cookie);
+            $user = User::where('email', $request->email)->first();
+
+            $authToken = $user->createToken('auth-token')->plainTextToken;
+
+            return response([
+                'token' => $authToken,
+                'user' =>  UserShowResource::make($user),
+            ], Response::HTTP_OK);
         }
 
-        return response(['message' => 'Credentials invalid'], Response::HTTP_UNAUTHORIZED);
+        return response()->json([
+            "message" => "The given data is invalid.",
+            "errors" => [
+                "message" => [
+                    "Invalid credentials (password or email)."
+                ],
+            ],
+        ], 401);
     }
 
     public function userProfile(Request $request) {
