@@ -23,3 +23,7 @@
 /frontend/yarn-error.log*
 
 /frontend/.env
+
+/symfony-backend/vendor/
+/symfony-backend/var/
+/symfony-backend/.env
