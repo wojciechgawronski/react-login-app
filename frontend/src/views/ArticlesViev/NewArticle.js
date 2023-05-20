@@ -50,6 +50,11 @@ export async function newArticleAction({ request }) {
             body: JSON.stringify(newArticleData)
         });
 
+        if (resData.status === 419) {
+            alert('419. ' + resData.statusText)
+            return resData;
+        }
+
         if (resData.status === 401) {
             return resData;
         } else {

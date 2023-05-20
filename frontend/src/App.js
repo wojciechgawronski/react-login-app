@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import AccountView from './views/AccountView/AccountView';
+import AccountView, { accountDataLoader } from './views/AccountView/AccountView';
 import ArticlesListView, { listLoader as articlesListLoader} from './views/ArticlesViev/ArticlesListView';
 import ArticlesView, { articlesLoader } from './views/ArticlesViev/ArticlesView';
 import ShowArticle, { loader as articleLoader} from './views/ArticlesViev/ShowArticle';
@@ -11,7 +11,7 @@ import RootLayout from './views/RootLayout';
 import ErrorPage from './views/ErrorPage';
 import NewArticle, { newArticleAction } from './views/ArticlesViev/NewArticle';
 import EditArticle, { loader as editArticleLoader, editArticleAction } from './views/ArticlesViev/EditArticle';
-import { tokenLoader, checkAuthLoader, logoutAction } from './util/auth';
+import { tokenLoader, logoutAction, checkAuthLoader } from './util/auth';
 
 const router = createBrowserRouter([
     {
@@ -41,8 +41,15 @@ const router = createBrowserRouter([
             },
             {
                 path: 'account',
-                element: <AccountView/>,
-                loader: checkAuthLoader,
+                id: 'account-detail',
+                loader: accountDataLoader,
+                children: [
+                    {
+                        index: true, 
+                        element: <AccountView/>,
+                        loader: checkAuthLoader,
+                    }
+                ]
             },
             {
                 path: 'articles',
