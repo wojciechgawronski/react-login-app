@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -37,6 +37,26 @@ class ArticleRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findAll()
+    {
+        return $this
+            ->createQueryBuilder('a')
+            ->select(['a.title', 'a.slug', 'a.uuid', 'a.id'])
+            ->getQuery()
+            ->getResult()
+        ; 
+    }
+
+    public function findOneById(int $id): ?array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
