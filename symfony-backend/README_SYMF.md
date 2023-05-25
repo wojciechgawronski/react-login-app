@@ -15,3 +15,5 @@ bin/console doctrine:migrations:migrate
 bin/console doctrine:fixtures:load  
 
 php bin/console debug:router  
+
+composer require api;  
