@@ -87,9 +87,10 @@ class ArticleController extends AbstractController
         $em->flush();
 
         return $this->json([
+            'status' => 'OK',
             'title' => $title,
             'content' => $content,
-        ]);
+        ], 201);
     }
 
     #[Route('/articles/{id}', name: 'app_article_delete', methods: ['DELETE'])]
